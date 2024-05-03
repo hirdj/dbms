@@ -1,0 +1,55 @@
+import numpy as np
+import pandas as pd
+from sklearn.model_selection import train_test_split
+import matplotlib.pyplot as plt
+from math import exp
+
+data = pd.read_csv("D:\DSBDAL Practical\Social_Network_Ads.csv")
+
+df = data
+df.head()
+
+data.describe()
+
+plt.scatter(df['Age'],df['Purchased'])
+plt.xlabel("Age")
+plt.ylabel("Purchased")
+plt.show()
+
+x_train,x_test,y_train,y_test =train_test_split(df['Age'],data['Purchased'],test_size=0.20)
+
+from sklearn.linear_model import LogisticRegression 
+model = LogisticRegression()
+
+model.fit(x_train.values.reshape(-1,1),y_train.values.reshape(-1,1).ravel())
+
+y_pred_sk = model.predict(x_test.values.reshape(-1,1))
+plt.clf()
+plt.scatter(x_test,y_test)
+plt.scatter(x_test,y_pred_sk,c="red")
+
+plt.xlabel("age")
+plt.ylabel("purchased")
+plt.show()
+
+print(f"Accuracy = {model.score(x_test.values.reshape(-1, 1), y_test.values.reshape(-1, 1))}")
+
+from sklearn.metrics import confusion_matrix
+
+tn,fp,fn,tp = confusion_matrix(y_test,y_pred_sk).ravel()
+print("True negative :",tn)
+print("False positive :",fp)
+print("False negative :",fn)
+print("True Positive :",tp)
+
+Accuracy = (tn+tp)*100/(tp+tn+fn+fp)
+print("Accuracy in percent :",Accuracy)
+
+precision = tp/(tp+fp)
+print("Precission ",precision)
+
+recall = tp/(tp+fn)
+print("recall",recall)
+
+err = (fp+fn)/(tp+tn+fn+fp)
+print("Error rate : ",err)

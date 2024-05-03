@@ -1,0 +1,16 @@
+import pandas as pandas
+import numpy as numpy
+import matplotlib.pyplot as pyplot
+import seaborn as sns
+df=sns.load_dataset("Titanic")
+df
+df.head()
+df.tail()
+df.describe
+df.info
+cols=df.columns
+cols
+df.info
+df.isnull().sum()
+sns.boxplot(x=df['sex'],y=df['age'])
+sns.boxplot(x=df['sex'],y=df['pclass'])

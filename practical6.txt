@@ -1,0 +1,48 @@
+import pandas as pd 
+import numpy as np
+import matplotlib.pyplot as plt
+dataset = pd.read_csv("D:\DSBDAL Practical\Iris11.csv",header=None)
+
+df= dataset
+col_name = ['sepal_length','sepal_width','petal_length','petal_width','species']
+df = pd.read_csv("D:\DSBDAL Practical\Iris11.csv",names=col_name)
+
+x= df.iloc[:,:4].values
+y= df['species'].values
+
+df.head()
+
+from sklearn.model_selection import train_test_split
+x_train,x_test,y_train,y_test = train_test_split(x,y,test_size=0.2)
+
+from sklearn.preprocessing import StandardScaler 
+sc = StandardScaler()
+x_train = sc.fit_transform(x_train)
+x_test = sc.transform(x_test)
+
+from sklearn.naive_bayes import GaussianNB
+classifier = GaussianNB()
+classifier.fit(x_train,y_train)
+
+y_pred = classifier.predict(x_test)
+
+y_pred
+
+from sklearn.metrics import confusion_matrix
+cm= confusion_matrix(y_test,y_pred)
+from sklearn.metrics import accuracy_score
+print("Accuracy : ",accuracy_score(y_test,y_pred))
+print(cm)
+
+import pandas as pd
+df = pd.DataFrame({'Real Values':y_test,'Predicted values':y_pred })
+print(df)
+
+from sklearn.metrics import precision_score,recall_score,accuracy_score
+
+m= accuracy_score(y_test,y_pred)
+print("Error rate:-",1-m)
+
+print("Precision:-",precision_score(y_test,y_pred,average='micro'))
+
+print("Recall Score: ",recall_score(y_test,y_pred,average='micro'))

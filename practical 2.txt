@@ -1,0 +1,68 @@
+import pandas as pd 
+import numpy as np
+
+df = pd.read_csv("D:\DSBDAL Practical\student2.csv")
+df
+
+series=pd.isnull(df['Math_Score'])
+df[series]
+
+from sklearn.preprocessing import LabelEncoder 
+le = LabelEncoder()
+
+df['Gender'] = le.fit_transform(df['Gender'])
+
+newdf= df
+
+missing_values = {'NA','na'}
+
+df = pd.read_csv("D:\DSBDAL Practical\student2.csv",na_values=missing_values)
+df
+
+ndf= df
+
+ndf.fillna(0)
+
+df['Math_Score'] = df['Math_Score'].fillna(df['Math_Score'].mean())
+
+mv = df['Math_Score'].mean()
+
+df['Math_Score'].fillna(value=mv,inplace=True)
+
+df['Math_Score'] = df['Math_Score'].fillna(df['Math_Score'].median())
+
+df['Math_Score'] = df['Math_Score'].fillna(df['Math_Score'].std())
+
+df['Math_Score'] = df['Math_Score'].fillna(df['Math_Score'].max())
+
+df['Math_Score'] = df['Math_Score'].fillna(df['Math_Score'].min())
+
+ndf.dropna()
+
+ndf.dropna(how= 'all')
+
+ndf.dropna(axis = 1)
+
+new_data = ndf.dropna(axis = 0, how = 'any')
+
+new_data
+
+np.where(df['Math_Score']>90)
+
+import pandas as pd 
+import numpy as np
+import matplotlib.pyplot as plt
+
+col = ['Math_Score','Reading_Score','Writing_Score']
+df.boxplot(col)
+
+df.columns
+
+fig, ax = plt.subplots(figsize =(18,10))
+
+import numpy as np
+
+from scipy import stats
+
+z= np.abs(stats.zscore(df['Math_Score']))
+z
